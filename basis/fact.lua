@@ -1,6 +1,6 @@
 -- defines a factorial function
 function fact(n)
-	if n == 0 then
+	if n <= 1 then
 		return 1
 	else
 		return n * fact(n-1)
