@@ -1,1 +1,1 @@
-snippets from <Programming in Lua>
+snippets from `Programming in Lua`
