@@ -36,4 +36,70 @@ for i in ipairs(t) do print(i) end
 print()
 
 
+-- statefull iterators
+do
+  local generator = function(t)
+    local s = 1
+    local v = nil
+    local g = function()
+      v = t[s]
+      s = s + 1
+      return v
+    end
+    return g, s, v 
+  end
+
+  t = {10, 20, 30, 40, 50}
+
+  for v in generator(t) do print(v) end
+  print()
+
+  -- the equivalent the following code:
+  local f, s, v = generator(t)
+  while true do
+    v = f()
+    if v == nil then break end
+    print(v)
+  end
+  print()
+end
+
+
+-- stateless iterators
+for k, v in next, t do
+  print(k, v)
+end
+print()
+
+function mypairs (t)
+  return next, t, nil
+end
+
+for k, v in mypairs(t) do
+  print(k, v)
+end
+print()
+
+
+-- an example 
+local function getnext(list, node)
+  if not node then
+    return list
+  else
+    return node.next
+  end
+end
+
+function traverse(list)
+  return getnext, list, nil
+end
+
+list = nil
+for line in io.lines() do
+  list = {val = line, next = list}
+end
+for node in traverse(list) do
+  print(node.val)
+end
+
 
